@@ -1,0 +1,195 @@
+/* Container */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 96vh;
+    background-color: #f4f4f9;
+    font-family: Arial, sans-serif;
+}
+
+/* Form */
+form {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+form h2 {
+    margin-bottom: 1.5rem;
+}
+
+form input[type="text"],
+form input[type="email"],
+form input[type="password"] {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+form input[type="checkbox"] {
+    margin-right: 0.5rem;
+}
+
+form button {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #6200ea;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 1rem;
+}
+
+form button:hover {
+    background-color: #3700b3;
+}
+
+form a {
+    display: block;
+    margin-top: 1rem;
+    color: #6200ea;
+    text-decoration: none;
+}
+
+form a:hover {
+    text-decoration: underline;
+}
+
+/* Messages */
+.success-message {
+    color: #388e3c;
+    margin-bottom: 1rem;
+}
+
+.error-message {
+    color: #d32f2f;
+    margin-bottom: 1rem;
+}
+
+.password-container span {
+    position: absolute;
+    left: 23rem;  /* Adjusted to align better */
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #6c757d;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.password-container span:hover {
+    color: #6200ea;
+    background: none;
+}
+
+
+/* Dropdown Styles */
+form select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    background-color: white;
+    appearance: none;
+    margin: 0.5rem 0 1rem;
+    cursor: pointer;
+}
+
+form select:focus {
+    outline: none;
+    border-color: #6200ea;
+    box-shadow: 0 0 0 2px rgba(98, 0, 234, 0.2);
+}
+
+form label {
+    display: block;
+    text-align: left;
+    margin-bottom: 0.25rem;
+    color: #333;
+    font-weight: bold;
+}
+
+form .dropdown-container {
+    position: relative;
+    text-align: left;
+}
+
+form .dropdown-container::after {
+    content: '▼';
+    position: absolute;
+    top: 50%;
+    right: 1rem;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: #6c757d;
+}
+
+
+
+/* 2FA Setup */
+.two-fa-setup {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.two-fa-setup h2 {
+    color: #333;
+    margin-bottom: 1.5rem;
+}
+
+.two-fa-setup img {
+    margin: 1rem 0;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    max-width: 100%;
+}
+
+.two-fa-setup input[type="text"] {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    text-align: center;
+    margin: 1rem 0;
+}
+
+.two-fa-setup button {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #03a9f4;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.two-fa-setup button:hover {
+    background-color: #0288d1;
+}
+
+.two-fa-setup button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
