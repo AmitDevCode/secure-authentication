@@ -1,0 +1,217 @@
+/* Container */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #e9ecef;
+    font-family: Arial, sans-serif;
+}
+
+.center-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 400px;
+}
+
+
+/* Form */
+form {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+form h2 {
+    margin-bottom: 1.5rem;
+}
+
+form input[type="email"],
+form input[type="password"],
+form input[type="text"] {
+    width: 100%;
+    padding: 0.75rem;
+    margin: 0.5rem 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+form button {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 1rem;
+}
+
+form button:hover {
+    background-color: #0056b3;
+}
+
+form a {
+    display: block;
+    margin-top: 1rem;
+    color: #007bff;
+    text-decoration: none;
+}
+
+form a:hover {
+    text-decoration: underline;
+}
+
+/* Password Container */
+.password-container {
+    position: relative;
+    width: 100%;
+}
+
+.password-container input[type="password"],
+.password-container input[type="text"] {
+    width: 100%;
+    padding-right: 2.5rem; /* Space for the eye icon */
+    box-sizing: border-box;
+}
+
+.toggle-password {
+    position: absolute;
+    left: 11rem; /* Adjusted to align better */
+    top: 21%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #6c757d;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.toggle-password:hover {
+    color: #007bff;
+    background: none;
+}
+
+/* Two-Factor Authentication */
+.two-fa-setup {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.two-fa-setup h2 {
+    color: #333;
+    margin-bottom: 1.5rem;
+}
+
+.two-fa-setup input[type="text"] {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    text-align: center;
+    margin: 1rem 0;
+}
+
+.two-fa-setup button {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.two-fa-setup button:hover {
+    background-color: #218838;
+}
+
+.two-fa-setup button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* Account Locked Styles */
+.account-locked {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* Optional: for vertical centering inside its container */
+    text-align: center;
+    background-color: #00bcd4;
+    /*padding: 1rem;*/
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1rem;
+    width: 100%; /* Make it stretch in form */
+}
+
+.account-locked h2 {
+    color: #dc3545;
+    margin-bottom: 1rem;
+}
+
+.account-locked p {
+    color: #333;
+    margin-bottom: 1.5rem;
+}
+
+.lockout-timer {
+    background: #f8f9fa;
+    padding: 1rem;
+    margin-top: 0.5rem;
+    border-radius: 6px;
+    font-family: monospace;
+    font-size: 1.2rem;
+    color: #d9534f;
+}
+
+.lockout-timer p {
+    color: #6c757d;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.timer {
+    font-family: monospace;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #dc3545;
+}
+
+/* Login Warning */
+.login-warning {
+    color: #dc3545;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    text-align: left;
+}
+
+.account-locked.inline {
+    background-color: #fff3cd;
+    border: 1px solid #ffeeba;
+    color: #856404;
+    padding: 1rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+}
+
