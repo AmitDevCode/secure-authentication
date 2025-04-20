@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import io.swagger.v3.oas.annotations.servers.Server;
 
+
 @OpenAPIDefinition(
         info = @Info(
                 contact = @Contact(name = "Amit", email = "contact@amitcoding.com", url = "https://amitcoding.com/course"),

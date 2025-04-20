@@ -9,6 +9,7 @@ import com.amit.security.auth.service.AuthenticationService;
 import com.amit.security.response.ApiResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +27,7 @@ public class AuthenticationController {
 
     // Here ADMIN Can Only Create  Endpoint For All
     @PostMapping("/register")
-    public ResponseEntity<Object> register(@RequestBody RegisterRequest request) {
+    public ResponseEntity<Object> register(@Valid @RequestBody RegisterRequest request) {
         var response = service.register(request);
         if (request.isMfaEnabled()) return ResponseEntity.ok(response);
         return ResponseEntity.accepted().build();
@@ -34,7 +35,7 @@ public class AuthenticationController {
 
     // This Auth Endpoint For All
     @PostMapping("/authenticate")
-    public ResponseEntity<ApiResponse<AuthenticationResponse>> authenticate(@RequestBody AuthenticationRequest request) {
+    public ResponseEntity<ApiResponse<AuthenticationResponse>> authenticate(@Valid @RequestBody AuthenticationRequest request) {
         System.out.println("Authenticating request: " + request);
         return ResponseEntity.ok(ApiResponse.success(service.authenticate(request), "Authentication success", HttpStatus.OK.value()));
     }
@@ -45,7 +46,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/verify")
-    public ResponseEntity<Object> verifyCode(@RequestBody VerificationRequest verificationRequest) {
+    public ResponseEntity<Object> verifyCode(@Valid @RequestBody VerificationRequest verificationRequest) {
         return ResponseEntity.ok(service.verifyCode(verificationRequest));
     }
 }

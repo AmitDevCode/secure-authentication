@@ -1,6 +1,5 @@
 package com.amit.security.employee.model;
 
-import com.amit.security.constants.Department;
 import com.amit.security.constants.Role;
 import jakarta.persistence.*;
 import lombok.*;
@@ -15,8 +14,8 @@ import java.util.Collection;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "_employee")
-public class Employee implements UserDetails {
+@Table(name = "_user")
+public class User implements UserDetails {
     @Id
     @UuidGenerator
     @Column(length = 36)
@@ -37,9 +36,6 @@ public class Employee implements UserDetails {
 
     @Enumerated(EnumType.STRING)
     private Role role;
-
-    @Enumerated(EnumType.STRING)
-    private Department department;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

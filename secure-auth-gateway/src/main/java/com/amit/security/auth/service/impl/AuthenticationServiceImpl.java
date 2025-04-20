@@ -1,48 +1,48 @@
 package com.amit.security.auth.service.impl;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.amit.security.auth.request.AuthenticationRequest;
 import com.amit.security.auth.request.RegisterRequest;
 import com.amit.security.auth.request.VerificationRequest;
 import com.amit.security.auth.response.AuthenticationResponse;
 import com.amit.security.auth.service.AuthenticationService;
 import com.amit.security.config.JwtService;
-import com.amit.security.employee.model.Employee;
-import com.amit.security.employee.repository.EmployeeRepository;
+import com.amit.security.employee.model.User;
+import com.amit.security.employee.repository.UserRepository;
+import com.amit.security.events.UserActivityEvent;
 import com.amit.security.tfa.TwoFactorAuthenticationService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Lazy;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AuthenticationServiceImpl implements AuthenticationService {
-    private final EmployeeRepository repository;
+    private final UserRepository repository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private final TwoFactorAuthenticationService tfaService;
+    private final ApplicationEventPublisher eventPublisher;
+
 
     @Override
     public AuthenticationResponse register(RegisterRequest request) {
-        var user = Employee.builder()
-                .firstname(request.getFirstname())
-                .lastname(request.getLastname())
-                .email(request.getEmail())
-                .password(passwordEncoder.encode(request.getPassword()))
-                .role(request.getRole())
-                .mfaEnabled(request.isMfaEnabled()).build();
+        var user = User.builder().firstname(request.getFirstname()).lastname(request.getLastname()).email(request.getEmail())
+                .password(passwordEncoder.encode(request.getPassword())).role(request.getRole()).mfaEnabled(request.isMfaEnabled()).build();
 
         // if MFA enabled --> Generate Secret
         if (request.isMfaEnabled()) user.setSecret(tfaService.generateNewSecret());
@@ -58,16 +58,15 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
         System.out.println("Authenticating request from service: " + request);
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
+        System.out.println("IsAuthenticated : " + authentication.isAuthenticated());
 
-        boolean isAuthenticated = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())).isAuthenticated();
-        System.out.println("IsAuthenticated : " + isAuthenticated);
         var user = repository.findByEmail(request.getEmail()).orElseThrow();
-
         if (user.isMfaEnabled()) return AuthenticationResponse.builder().accessToken("").refreshToken("").mfaEnabled(true).build();
-
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
 
+        if (authentication.isAuthenticated()) eventPublisher.publishEvent(new UserActivityEvent(this, request.getEmail(), "LOGIN", "User logged in successfully"));
         return AuthenticationResponse.builder().accessToken(jwtToken).refreshToken(refreshToken).mfaEnabled(false).build();
     }
 
@@ -97,6 +96,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         if (tfaService.isOtpNotValid(user.getSecret(), verificationRequest.getCode())) throw new BadCredentialsException("Code is not correct");
 
         var jwtToken = jwtService.generateToken(user);
+
+        eventPublisher.publishEvent(new UserActivityEvent(this, verificationRequest.getEmail(), "LOGIN", "User logged in successfully"));
         return AuthenticationResponse.builder().accessToken(jwtToken).mfaEnabled(user.isMfaEnabled()).build();
     }
 }

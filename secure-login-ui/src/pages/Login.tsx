@@ -100,8 +100,8 @@ const Login: React.FC = () => {
             if (!response.data?.mfaEnabled) {
                 if (response.data?.accessToken)
                     localStorage.setItem("token", response.data?.accessToken as string)
-                console.log("Token : ", authResponse.data?.accessToken)
-                console.log("Token : ", authResponse.statusCode)
+                console.log("Token : ", response.data?.accessToken)
+                console.log("Status Code : ", response?.statusCode)
                 navigate("/dashboard")
             }
         } catch (error) {

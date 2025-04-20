@@ -55,7 +55,7 @@ const Register: React.FC = () => {
 
     return (
         <div className="container">
-            {!authResponse.mfaEnabled ? (
+            {!authResponse.data?.mfaEnabled ? (
                 <form onSubmit={registerUser}>
                     <h2>Register</h2>
                     {message && <div className="success-message">{message}</div>}
@@ -108,7 +108,7 @@ const Register: React.FC = () => {
             ) : (
                 <div className="two-fa-setup">
                     <h2>Set Up Two-Factor Authentication</h2>
-                    <img src={authResponse.secretImageUri} alt="QR Code" />
+                    <img src={authResponse.data?.secretImageUri} alt="QR Code" />
                     <input type="text" placeholder="Validation Code" value={otpCode} onChange={(e) => setOtpCode(e.target.value)} required />
                     <button onClick={verifyTfa} disabled={otpCode.length < 6}>Verify code</button>
                 </div>

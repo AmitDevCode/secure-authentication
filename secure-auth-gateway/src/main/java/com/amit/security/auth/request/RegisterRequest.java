@@ -1,8 +1,7 @@
 package com.amit.security.auth.request;
 
-import com.amit.security.constants.Department;
 import com.amit.security.constants.Role;
-import com.amit.security.employee.model.Employee;
+import com.amit.security.employee.model.User;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,20 +29,16 @@ public class RegisterRequest {
   @NotNull(message = "Role can not be empty !!")
   private Role role;
 
-  @NotNull(message = "Department can not be empty !!")
-  private Department department;
-
   private boolean mfaEnabled;
 
 
-  public Employee buildUpdateEmployee(Employee employee) {
-      employee.setFirstname(firstname);
-      employee.setLastname(lastname);
-      employee.setEmail(email);
-      employee.setPassword(password);
-      employee.setRole(role);
-      employee.setDepartment(department);
-      employee.setMfaEnabled(mfaEnabled);
-      return employee;
+  public User buildUpdateEmployee(User user) {
+      user.setFirstname(firstname);
+      user.setLastname(lastname);
+      user.setEmail(email);
+      user.setPassword(password);
+      user.setRole(role);
+      user.setMfaEnabled(mfaEnabled);
+      return user;
   }
 }

@@ -43,7 +43,6 @@ public class SecurityConfiguration {
 
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final CustomUserDetailsService userDetailsService;
-//    private final AuthenticationProvider authenticationProvider;
 
 
     @Bean
@@ -60,15 +59,6 @@ public class SecurityConfiguration {
         provider.setPasswordEncoder(passwordEncoder());
         return provider;
     }
-
-
-//    @Bean
-//    public AuthenticationProvider authenticationProvider() {
-//        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-//        provider.setUserDetailsService(userDetailsService);  // use injected bean
-//        provider.setPasswordEncoder(passwordEncoder());        // use injected bean
-//        return provider;
-//    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
