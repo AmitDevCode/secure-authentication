@@ -1,6 +1,9 @@
 package com.amit.security.demo.controller;
 
+import com.amit.security.response.ApiResponse;
 import io.swagger.v3.oas.annotations.Hidden;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,8 +19,8 @@ public class AdminController {
 
     @GetMapping
     @PreAuthorize("hasAuthority('admin:read')")
-    public String get() {
-        return "GET:: admin controller";
+    public ResponseEntity<ApiResponse<String>> get() {
+        return ResponseEntity.ok(ApiResponse.success("GET:: admin controller", "Admin get success", HttpStatus.OK.value()));
     }
 
     @Hidden

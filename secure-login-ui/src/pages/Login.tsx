@@ -97,8 +97,11 @@ const Login: React.FC = () => {
             localStorage.removeItem("loginAttempts")
             localStorage.removeItem("lockoutTime")
 
-            if (!response.mfaEnabled) {
-                localStorage.setItem("token", response.accessToken as string)
+            if (!response.data?.mfaEnabled) {
+                if (response.data?.accessToken)
+                    localStorage.setItem("token", response.data?.accessToken as string)
+                console.log("Token : ", authResponse.data?.accessToken)
+                console.log("Token : ", authResponse.statusCode)
                 navigate("/dashboard")
             }
         } catch (error) {
@@ -124,7 +127,8 @@ const Login: React.FC = () => {
     const verifyTfa = async () => {
         try {
             const response = await verifyCode({ email: authRequest.email, code: otpCode })
-            localStorage.setItem("token", response.accessToken as string)
+            if (response.data?.accessToken)
+                localStorage.setItem("token", response.data?.accessToken as string)
             navigate("/dashboard")
         } catch (error) {
             alert("Verification failed")
@@ -143,7 +147,7 @@ const Login: React.FC = () => {
     return (
         <div className="container">
             <div className="center-box">
-                {authResponse.mfaEnabled ? (
+                {authResponse.data?.mfaEnabled ? (
                     <div className="two-fa-setup">
                         <h2>Two-Factor Authentication</h2>
                         <input

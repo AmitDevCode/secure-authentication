@@ -7,6 +7,7 @@ spring:
     password: root1234
     driver-class-name: org.postgresql.Driver
   jpa:
+    open-in-view: false
     hibernate:
       ddl-auto: update
     show-sql: false
@@ -25,3 +26,7 @@ application:
         expiration: 604800000 # 7 days
 server:
   port: 8085
+
+logging:
+  level:
+    org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer: error

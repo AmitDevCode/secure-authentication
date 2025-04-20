@@ -13,7 +13,9 @@ import com.amit.security.tfa.TwoFactorAuthenticationService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -34,8 +36,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public AuthenticationResponse register(RegisterRequest request) {
-        var user = Employee.builder().firstname(request.getFirstname()).lastname(request.getLastname()).email(request.getEmail())
-                .password(passwordEncoder.encode(request.getPassword())).role(request.getRole()).mfaEnabled(request.isMfaEnabled()).build();
+        var user = Employee.builder()
+                .firstname(request.getFirstname())
+                .lastname(request.getLastname())
+                .email(request.getEmail())
+                .password(passwordEncoder.encode(request.getPassword()))
+                .role(request.getRole())
+                .mfaEnabled(request.isMfaEnabled()).build();
 
         // if MFA enabled --> Generate Secret
         if (request.isMfaEnabled()) user.setSecret(tfaService.generateNewSecret());

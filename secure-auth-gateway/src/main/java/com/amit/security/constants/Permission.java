@@ -3,6 +3,7 @@ package com.amit.security.constants;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+@Getter
 @RequiredArgsConstructor
 public enum Permission {
 //    ADMIN_READ("admin:read"),
@@ -25,6 +26,11 @@ public enum Permission {
     SUPER_ADMIN_UPDATE("super_admin:update"),
     SUPER_ADMIN_CREATE("super_admin:create"),
     SUPER_ADMIN_DELETE("super_admin:delete"),
+
+    ADMIN_READ("admin:read"),
+    ADMIN_UPDATE("admin:update"),
+    ADMIN_CREATE("admin:create"),
+    ADMIN_DELETE("admin:delete"),
 
     MANAGER_READ("management:read"),
     MANAGER_UPDATE("management:update"),
@@ -73,6 +79,5 @@ public enum Permission {
     EMPLOYEE_CREATE("employee:create"),
     EMPLOYEE_DELETE("employee:delete");
 
-    @Getter
     private final String permission;
 }

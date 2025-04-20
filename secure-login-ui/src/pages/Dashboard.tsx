@@ -1,40 +1,48 @@
-import React from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './styles/Dashboard.css';
 
-// Logout Function
-const logout = () => {
-    localStorage.removeItem('token');
-};
-
 const Dashboard: React.FC = () => {
     const navigate = useNavigate();
+    const [email, setEmail] = useState<string>('User');
 
-    const handleLogout = () => {
-        logout();
-        navigate('/login');
-    };
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        const storedEmail = localStorage.getItem('email');
+
+        if (!token) {
+            navigate('/login', { replace: true });
+        } else if (storedEmail) {
+            setEmail(storedEmail);
+        }
+    }, [navigate]);
+
+    const handleLogout = useCallback(() => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('email');
+        navigate('/login', { replace: true });
+    }, [navigate]);
 
     return (
         <div className="dashboard-container">
             <nav className="navbar">
                 <h1>Dashboard</h1>
-                <button onClick={handleLogout}>Logout</button>
+                <button onClick={handleLogout} aria-label="Logout Button">
+                    Logout
+                </button>
             </nav>
 
             <main className="main-content">
                 <h2>Welcome to Your Dashboard</h2>
-                <p>Hello, {localStorage.getItem('email') || 'User'}!</p>
+                <p>Hello, {email}!</p>
 
                 <div className="widgets-container">
-                    <div className="widget">
-                        <h3>Widget 1</h3>
-                        <p>Some information or data here...</p>
-                    </div>
-                    <div className="widget">
-                        <h3>Widget 2</h3>
-                        <p>More information or data here...</p>
-                    </div>
+                    {['Widget 1', 'Widget 2'].map((title, index) => (
+                        <div className="widget" key={index}>
+                            <h3>{title}</h3>
+                            <p>{index === 0 ? 'Some information or data here...' : 'More information or data here...'}</p>
+                        </div>
+                    ))}
                 </div>
             </main>
         </div>

@@ -1,3 +1,4 @@
+
 package com.amit.security.auth.controller;
 
 import com.amit.security.auth.request.AuthenticationRequest;
@@ -5,9 +6,11 @@ import com.amit.security.auth.request.RegisterRequest;
 import com.amit.security.auth.request.VerificationRequest;
 import com.amit.security.auth.response.AuthenticationResponse;
 import com.amit.security.auth.service.AuthenticationService;
+import com.amit.security.response.ApiResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +24,7 @@ public class AuthenticationController {
 
     private final AuthenticationService service;
 
-    // Here SUPER_ADMIN Can Only Create  Endpoint For All
+    // Here ADMIN Can Only Create  Endpoint For All
     @PostMapping("/register")
     public ResponseEntity<Object> register(@RequestBody RegisterRequest request) {
         var response = service.register(request);
@@ -31,9 +34,9 @@ public class AuthenticationController {
 
     // This Auth Endpoint For All
     @PostMapping("/authenticate")
-    public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request) {
+    public ResponseEntity<ApiResponse<AuthenticationResponse>> authenticate(@RequestBody AuthenticationRequest request) {
         System.out.println("Authenticating request: " + request);
-        return ResponseEntity.ok(service.authenticate(request));
+        return ResponseEntity.ok(ApiResponse.success(service.authenticate(request), "Authentication success", HttpStatus.OK.value()));
     }
 
     @PostMapping("/refresh-token")
